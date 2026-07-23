@@ -124,7 +124,6 @@ except FileNotFoundError:
     print("Mock Dataset Created Successfully")
     print(f"Dataset Shape : {df.shape}")
  
-
 #  Convert date column to datetime
 df["date"] = pd.to_datetime(df["date"])
 
@@ -206,7 +205,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 print("Training Samples :", len(X_train))
 print("Validation Samples :", len(X_test))
 
-
 # Save the testing arrays out to disk so 'test.py' can pick them up blindly later
 # ( .npyis NumPy's binary file format.It stores arrays efficiently.)
 # Save test data
@@ -215,7 +213,6 @@ np.save('X_test.npy', X_test)
 np.save('y_test.npy', y_test)
 # print("Training/Testing vectors partitioned. Test arrays cached to disk array profiles.")
 print("Test Data Saved Successfully")
-
 
 # Feature Scaling using StandardScaler
 
@@ -319,5 +316,3 @@ print("y_test.npy")
 print("fuel_model.keras")
 print("scaler.pkl")
 print("features.pkl")
-
-

@@ -1,4 +1,4 @@
-#  import libraries
+# import libraries
 
 import numpy as np
 import pandas as pd
@@ -319,4 +319,5 @@ print("y_test.npy")
 print("fuel_model.keras")
 print("scaler.pkl")
 print("features.pkl")
+
 

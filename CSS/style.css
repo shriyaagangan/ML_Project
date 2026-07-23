@@ -1,0 +1,182 @@
+/* --- Global Reset & Modern Font --- */
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #f0f4f8; /* Soft slate light background */
+    color: #1e293b;
+    padding: 30px 15px;
+}
+
+/* --- Layout Container & Header --- */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Premium soft shadow */
+}
+
+.project-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.project-header h1 {
+    color: #1e3a8a; /* Indigo Royal Blue */
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.project-header p {
+    color: #64748b;
+    margin-top: 5px;
+    font-size: 0.95rem;
+}
+
+/* --- Metrics Grid (Top Dashboard) --- */
+.performance-section h2 {
+    font-size: 1.1rem;
+    color: #475569;
+    margin-bottom: 12px;
+}
+
+.metrics-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.metric-box {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.metric-box:hover {
+    transform: translateY(-3px); /* Interactive bounce effect */
+}
+
+.metric-box h3 {
+    font-size: 0.85rem;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.metric-box .value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2563eb; /* Highlighting values in pure blue */
+    margin-top: 4px;
+}
+
+/* --- Main Content Workspace Grid --- */
+.main-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.form-container, .chart-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.form-container h2, .chart-container h2 {
+    font-size: 1.15rem;
+    color: #0f172a;
+    margin-bottom: 20px;
+    border-left: 4px solid #2563eb; /* Stylish visual accent bar */
+    padding-left: 10px;
+}
+
+/* --- Form Fields --- */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #475569;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: #f8fafc;
+    transition: all 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #2563eb;
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); /* Clean focus ring */
+}
+
+/* --- Primary Button --- */
+.predict-btn {
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.predict-btn:hover {
+    background: #1d4ed8;
+}
+
+/* --- Dynamic Flask Prediction Result Output Box --- */
+.result-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f0fdf4; /* Emerald light green */
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.result-box h4 { font-size: 0.85rem; color: #166534; }
+.result-box .result-value { font-size: 1.3rem; font-weight: 700; color: #15803d; }
+
+/* --- Graph Image & Page Footer --- */
+.project-chart {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.chart-caption {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.project-footer {
+    text-align: center;
+    margin-top: 35px;
+    font-size: 0.8rem;
+    color: #94a3b8;
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PriceSense - Fuel Price Prediction</title>
+    <!-- Link CSS file to html -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <header class="project-header">
+            <h1>PriceSense: Fuel Price Forecast Platform</h1>
+            <p><strong>Project Type:</strong> Machine Learning (Deep Learning Neural Network)</p>
+            <p><strong>Domain:</strong> Energy & Petroleum Logistics</p>
+        </header>
+
+        <!-- Test Metrics Panel -->
+        <section class="performance-section">
+            <h2> Model Performance</h2>
+            <div class="metrics-row">
+                <div class="metric-box">
+                    <h3>Mean Absolute Error (MAE)</h3>
+                    <p class="value">0.0241</p>
+                </div>
+                <div class="metric-box">
+                    <h3>R² Accuracy Score</h3>
+                    <p class="value">94.82%</p>
+                </div>
+                <div class="metric-box">
+                    <h3>Neural Network Layers</h3>
+                    <p class="value">Dense (64, 32, 16)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <div class="main-layout">
+            
+            <!-- Prediction Form -->
+            <div class="form-container">
+                <h2> Predict Fuel Price </h2>
+                <form action="/predict" method="POST">
+                    
+                    <div class="form-group">
+                        <label for="year">Input Year:</label>
+                        <input type="number" id="year" name="year" value="2026" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="month">Input Month (1-12):</label>
+                        <input type="number" id="month" name="month" min="1" max="12" value="7" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="week">Week of Year (1-53):</label>
+                        <input type="number" id="week" name="week" min="1" max="53" value="28" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="brent">Brent Crude Price (USD/Barrel):</label>
+                        <input type="number" id="brent" name="brent_crude_usd" step="0.01" value="85.50" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tax">Tax Percentage (%):</label>
+                        <input type="number" id="tax" name="tax_percentage" step="0.01" value="25.00" required>
+                    </div>
+
+                    <button type="submit" class="predict-btn">Predict Fuel Price</button>
+                </form>
+
+                <!-- Display Prediction Result -->
+                {% if prediction_text %}
+                    <div class="result-box">
+                        <h4> Prediction Result:</h4>
+                        <p class="result-value">{{ prediction_text }}</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Fuel Price Trend Chart -->
+            <div class="chart-container">
+                <h2> Historical Pricing Trend Chart</h2>
+                <img src="{{ url_for('static', filename='price_trend.png') }}" alt="Fuel Pricing Chart Canvas View" class="project-chart">
+                <p class="chart-caption">Figure 1: Matplotlib analysis plot mapping raw benchmark values.</p>
+            </div>
+
+        </div>
+
+        <footer class="project-footer">
+            <p>Developed by Diploma Final Year Students for internship project</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
+
+
+

@@ -126,5 +126,3 @@ for i, fuel in enumerate(fuel_names):
 print("\n" + "=" * 60)
 print("PriceSense Testing Completed")
 print("=" * 60)
-
-

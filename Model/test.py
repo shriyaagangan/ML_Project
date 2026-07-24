@@ -123,7 +123,6 @@ for i, fuel in enumerate(fuel_names):
     plt.close()
     print(f"{fuel} Scatter Plot Saved Successfully")
 
-
 print("\n" + "=" * 60)
 print("PriceSense Testing Completed")
 print("=" * 60)

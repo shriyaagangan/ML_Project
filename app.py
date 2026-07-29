@@ -9,7 +9,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 # Create Flask Application
 
 app = Flask(__name__)
-app.secret_key = "pricesense"  # Change this to a random secret key
+app.secret_key = "PriceSense@2026_Project"  # Change this to a random secret key
 
 # Load the Trained Model
 
@@ -58,7 +58,6 @@ def login():
         session["username"] = username
         increase_visitors()
         return redirect(url_for("dashboard"))
-    
     return render_template("login.html")
 
 # Dashboard
@@ -67,12 +66,20 @@ def login():
 def dashboard():
     if "username" not in session:
         return redirect(url_for("login"))
-
     return render_template(
         "dashboard.html",
         username=session["username"],
         visitors=get_visitors()
     )
+    
+# Prediction Page
+@app.route("/predict")
+def predict():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    return render_template("predict.html")
 
 # Prediction Result
 
@@ -96,13 +103,14 @@ def result():
         input_scaled = scaler.transform(input_data)
 
         # Predict
-        prediction = model.predict(input_scaled)
+        prediction = model.predict(input_scaled, verbose=0)
         petrol = round(float(prediction[0][0]), 3)
         diesel = round(float(prediction[0][1]), 3)
         lpg = round(float(prediction[0][2]), 3)
 
         return render_template(
             "result.html",
+            username=session["username"],
             petrol=petrol,
             diesel=diesel,
             lpg=lpg,
@@ -118,29 +126,48 @@ def result():
     except Exception as e:
         return f"Prediction Error: {e}"
 
-# About Page
+# Analysis Page
 
-@app.route("/about")
-def about():
-    return render_template("about.html")
+@app.route("/analysis")
+def analysis():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    return render_template(
+    "analysis.html",
+    username=session["username"],
+    trend_graph="price_trend.png",
+    loss_graph="training_validation_loss.png",
+    mae_graph="training_validation_mae.png",
+    petrol_graph="petrol_scatter.png",
+    diesel_graph="diesel_scatter.png",
+    lpg_graph="lpg_scatter.png"
+)
 
-# Contact Page
-
-@app.route("/contact")
-def contact():
-    return render_template("contact.html")
 
 # Logout
 
 @app.route("/logout")
 def logout():
-
     session.clear()
-
     return redirect(url_for("login"))
+
+# Report Page
+
+@app.route("/report")
+def report():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    return render_template("report.html")
+    
+# About Page
+
+@app.route("/about")
+def about():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    return render_template("about.html")
 
 # Run Application
 
 if __name__ == "__main__":
     app.run(debug=True)
-    

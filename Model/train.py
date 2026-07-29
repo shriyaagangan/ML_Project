@@ -194,6 +194,13 @@ y = df[
     ]
 ].values
 
+print("Input Shape :", X.shape)
+print("Output Shape :", y.shape) 
+
+print("Number of Features:", len(features))
+print("Output Variables:", y.shape[1])
+
+
 # Train Test Split(Split data)
 
 X_train, X_test, y_train, y_test = train_test_split(
@@ -221,6 +228,8 @@ X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 print("Feature Scaling Completed Successfully")
 
+
+
 # Build Deep Learning Model
 
 model = Sequential()
@@ -234,6 +243,9 @@ model.add(Dense(32, activation="relu"))
 # Output Layer (Predict Petrol, Diesel and LPG Prices)
 model.add(Dense(3, activation="linear"))
 print("Model Created Successfully")
+
+# Display Model Architecture
+model.summary()
 
 # Compile Model
 
@@ -316,3 +328,5 @@ print("y_test.npy")
 print("fuel_model.keras")
 print("scaler.pkl")
 print("features.pkl")
+
+

@@ -87,7 +87,6 @@ print(df.describe())
 print("=" * 60)
 
 # Exploratory Data Analysis (EDA)
-
 print("\nGenerating Graphs...")
 
 # 1. Fuel Price Trend

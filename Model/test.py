@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import pickle
 import os
 import tensorflow as tf
+
 from sklearn.metrics import (
     mean_absolute_error, 
     mean_squared_error, 
@@ -19,6 +20,10 @@ print("=" * 60)
 
 model = tf.keras.models.load_model("fuel_model.keras")
 print("Model Loaded Successfully.")
+
+# Display Model Architecture
+
+model.summary()
 
 # Load Feature Scaler
 
@@ -42,7 +47,11 @@ print("Testing Data Loaded Successfully.")
 print("X_test Shape :", X_test.shape)
 print("y_test Shape :", y_test.shape)
 
-# Scale Testing Data (Feature Scaling)
+print("Number of Test Samples :", len(X_test))
+print("Number of Features :", X_test.shape[1])
+print("Number of Output Variables :", y_test.shape[1])
+
+# Scale Testing Data (Apply Feature Scaling)
 
 X_test = scaler.transform(X_test)
 print("Feature Scaling Applied Successfully")
@@ -50,6 +59,8 @@ print("Feature Scaling Applied Successfully")
 # Predict Fuel Prices
 
 predictions = model.predict(X_test)
+
+print("Prediction Shape :", predictions.shape)
 print("Prediction Completed Successfully")
 
 # Split Actual and Predicted Values
@@ -70,9 +81,9 @@ def evaluate(actual, predicted, fuel_name):
     rmse = np.sqrt(mse)
     r2 = r2_score(actual, predicted)
 
-    print("\n==============================")
+    print("\n" + "=" * 40)
     print(f"{fuel_name} Performance")
-    print("==============================")
+    print("=" * 40)
 
     print(f"MAE  : {mae:.4f}")
     print(f"MSE  : {mse:.4f}")
@@ -104,15 +115,22 @@ evaluate(
 os.makedirs("static", exist_ok=True)
 
 fuel_names = ["Petrol", "Diesel", "LPG"]
+
 for i, fuel in enumerate(fuel_names):
     plt.figure(figsize=(5,5))
-    plt.scatter(y_test[:, i], predictions[:, i], alpha=0.6,label="Predicted Values")
+    plt.scatter(
+        y_test[:, i],
+        predictions[:, i], 
+        alpha=0.6,
+        label="Predicted Values"
+    )
     plt.plot(
         [y_test[:, i].min(), y_test[:, i].max()],
         [y_test[:, i].min(), y_test[:, i].max()],
         "r--",
         label="Ideal Prediction"
     )
+    
     plt.title(f"{fuel}: Actual vs Predicted")
     plt.xlabel("Actual Price")
     plt.ylabel("Predicted Price")
@@ -122,6 +140,13 @@ for i, fuel in enumerate(fuel_names):
     plt.show()
     plt.close()
     print(f"{fuel} Scatter Plot Saved Successfully")
+
+# Print Saved Graph Location
+
+print("\nScatter Plots Saved In:")
+print("static/petrol_scatter.png")
+print("static/diesel_scatter.png")
+print("static/lpg_scatter.png")
 
 print("\n" + "=" * 60)
 print("PriceSense Testing Completed")

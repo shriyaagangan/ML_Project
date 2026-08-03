@@ -24,8 +24,13 @@ os.makedirs("static/graphs", exist_ok=True)
 
 # Load the Trained Model
 print("\nLoading Trained Model...")
-model = tf.keras.models.load_model("fuel_model.keras")
-print("Model Loaded Successfully.")
+print("=" * 60)
+try:
+    model = tf.keras.models.load_model("fuel_model.keras")
+    print("Model Loaded Successfully.")
+except:
+    print("Model File Not Found!")
+print("=" * 60)
 
 # Display Model Architecture
 model.summary()

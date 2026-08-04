@@ -2,10 +2,8 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>PriceSense | Login</title>
 
     <!-- CSS -->
@@ -19,66 +17,42 @@
     <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 </head>
 
 <body>
-
 <div class="login-page">
-
     <div class="login-card">
-
         <!-- Logo -->
-
         <img src="{{ url_for('static', filename='images/logo.png') }}"
              alt="PriceSense Logo"
              class="logo"
              loading="lazy">
-
         <h1>PriceSense</h1>
-
         <h3>Dynamic Fuel Price Forecast Platform</h3>
-
         <p class="subtitle">
             Machine Learning Based Fuel Price Prediction System
         </p>
-
         <!-- Flash Messages -->
-
         {% with messages = get_flashed_messages(with_categories=true) %}
-
             {% if messages %}
-
                 {% for category, message in messages %}
-
                     <div class="alert {{ category }}">
                         {{ message }}
                     </div>
-
                 {% endfor %}
-
             {% endif %}
-
         {% endwith %}
 
         <!-- Login Form -->
-
         <form action="{{ url_for('login') }}"
               method="POST"
               id="loginForm">
-
             <!-- Username -->
-
             <div class="input-group">
-
                 <label for="username">
-
                     <i class="fa-solid fa-user"></i>
-
                     Username
-
                 </label>
-
                 <input
                     type="text"
                     id="username"
@@ -86,21 +60,14 @@
                     placeholder="Enter Username"
                     autocomplete="username"
                     required>
-
             </div>
 
             <!-- Password -->
-
             <div class="input-group">
-
                 <label for="password">
-
                     <i class="fa-solid fa-lock"></i>
-
                     Password
-
                 </label>
-
                 <input
                     type="password"
                     id="password"
@@ -108,73 +75,44 @@
                     placeholder="Enter Password"
                     autocomplete="current-password"
                     required>
-
             </div>
 
             <!-- Login Button -->
-
             <button
                 type="submit"
                 class="btn">
-
                 <i class="fa-solid fa-right-to-bracket"></i>
-
                 Login
-
             </button>
-
         </form>
 
         <!-- Demo Credentials -->
-
-        <div class="login-info">
-
+        <!-- <div class="login-info">
             <h4>Demo Credentials</h4>
-
             <p>
-
                 <strong>Username :</strong>
-
                 admin
-
             </p>
-
             <p>
-
                 <strong>Password :</strong>
-
                 admin123
-
             </p>
-
-        </div>
+        </div> -->
 
         <!-- Footer -->
-
         <div class="login-footer">
-
             <p>
-
                 © 2026 PriceSense
-
             </p>
-
             <p>
-
                 Diploma Final Year Internship Project
-
             </p>
-
         </div>
-
     </div>
-
 </div>
 
 <!-- JavaScript -->
-
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
 </body>
 
 </html>

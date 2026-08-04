@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PriceSense | Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+    <div class="logo-section">
+        <img src="{{ url_for('static', filename='images/logo.png') }}"
+             class="nav-logo"
+             alt="Logo">
+        <h2>PriceSense</h2>
+    </div>
+
+    <ul class="nav-links">
+        <li>
+            <a href="{{ url_for('dashboard') }}" class="active">
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('prediction') }}">
+                Prediction
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('history') }}">
+                History
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('analysis') }}">
+                Analysis
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('report') }}">
+                Report
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('about') }}">
+                About
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="container">
+    <div class="welcome-card">
+        <h1>
+            Welcome,
+            {{ username }}
+        </h1>
+
+        <p>
+            PriceSense predicts Petrol and Diesel prices using
+            Deep Learning based on historical fuel prices,
+            Brent crude oil price and tax percentage.
+        </p>
+    </div>
+
+    <!-- ================= PROJECT INFORMATION ================= -->
+    <div class="dashboard-grid">
+        <div class="card">
+            <i class="fa-solid fa-microchip"></i>
+            <h3>Model</h3>
+            <p>
+                {{ model_name }}
+            </p>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-list-check"></i>
+            <h3>Features</h3>
+            <h2>
+                {{ total_features }}
+            </h2>
+
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-chart-line"></i>
+            <h3>Output Variables</h3>
+            <h2>
+                {{ output_variables }}
+
+            </h2>
+        </div>
+    </div>
+
+    <!-- ================= PROJECT DESCRIPTION ================= -->
+    <div class="info-card">
+        <h2>
+            Project Description
+        </h2>
+        <p>
+            PriceSense is a Machine Learning based Fuel Price
+            Forecast Platform developed as a Diploma Final Year
+            Internship Project.
+
+            The system predicts Petrol and Diesel prices using
+            historical fuel price data, Brent crude oil price,
+            tax percentage and seasonal information.
+        </p>
+    </div>
+
+    <!-- ================= FEATURE LIST ================= -->
+    <div class="info-card">
+        <h2>
+            Application Modules
+        </h2>
+        <ul>
+            <li>Dashboard</li>
+            <li>Fuel Price Prediction</li>
+            <li>Prediction History</li>
+            <li>Data Analysis</li>
+            <li>Project Report</li>
+            <li>About Project</li>
+        </ul>
+    </div>
+
+    <!-- ================= QUICK ACTION BUTTONS ================= -->
+    <div class="button-group">
+        <a href="{{ url_for('prediction') }}"
+           class="btn">
+            Predict Fuel Price
+        </a>
+
+        <a href="{{ url_for('analysis') }}"
+           class="btn">
+            View Analysis
+        </a>
+
+        <a href="{{ url_for('history') }}"
+           class="btn">
+            Prediction History
+        </a>
+    </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    <p>
+        © 2026 PriceSense |
+        Diploma Final Year Internship Project
+    </p>
+</footer>
+
+<!-- JavaScript -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

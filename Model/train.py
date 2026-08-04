@@ -90,10 +90,11 @@ print("=" * 60)
 print("\nGenerating Graphs...")
 
 # 1. Fuel Price Trend
+trend_df = df.groupby("date")[["petrol_usd_liter", "diesel_usd_liter"]].mean()
 plt.figure(figsize=(12,6))
-plt.plot(df["date"], df["petrol_usd_liter"], label="Petrol", color="blue")
-plt.plot(df["date"], df["diesel_usd_liter"], label="Diesel", color="green")
-plt.title("Fuel Price Trend")
+plt.plot(trend_df.index,trend_df["petrol_usd_liter"],label="Petrol",linewidth=2)
+plt.plot(trend_df.index,trend_df["diesel_usd_liter"],label="Diesel",linewidth=2)
+plt.title("Average Fuel Price Trend")
 plt.xlabel("Date")
 plt.ylabel("Price (USD/Litre)")
 plt.legend()
@@ -102,7 +103,6 @@ plt.tight_layout()
 plt.savefig("static/graphs/price_trend.png")
 plt.show()
 plt.close()
-print("Price Trend Graph Saved Successfully.")
 
 # 2. Petrol Price Distribution
 plt.figure(figsize=(8,5))

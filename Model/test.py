@@ -109,39 +109,41 @@ print(result_df.head())
 result_df.to_csv("prediction_results.csv", index=False)
 print("\nPrediction Results Saved Successfully.")
 
-# Actual vs Predicted Petrol Price
-plt.figure(figsize=(10,5))
-plt.plot(
+# Actual vs Predicted Petrol Price(scatter plot)
+plt.figure(figsize=(7,6))
+plt.scatter(
     y_test[:,0],
-    label="Actual Petrol",
-    color="blue"
+    predictions[:,0],
+    alpha=0.5,
+    color="royalblue"
 )
 plt.plot(
-    predictions[:,0],
-    label="Predicted Petrol",
-    color="red"
+    [y_test[:,0].min(), y_test[:,0].max()],
+    [y_test[:,0].min(), y_test[:,0].max()],
+    color="red",
+    linestyle="--"
 )
 plt.title("Actual vs Predicted Petrol Price")
-plt.xlabel("Test Samples")
-plt.ylabel("Price (USD/Litre)")
-plt.legend()
+plt.xlabel("Actual Petrol Price")
+plt.ylabel("Predicted Petrol Price")
 plt.grid(True)
 plt.tight_layout()
 plt.savefig("static/graphs/petrol_prediction.png")
 plt.show()
 plt.close()
-print("Petrol Prediction Graph Saved Successfully.")
 
 # Actual vs Predicted Diesel Price
 plt.figure(figsize=(10,5))
 plt.plot(
     y_test[:,1],
     label="Actual Diesel",
+    kde=True,
     color="green"
 )
 plt.plot(
     predictions[:,1],
     label="Predicted Diesel",
+    kde=True,
     color="orange"
 )
 plt.title("Actual vs Predicted Diesel Price")
@@ -188,6 +190,24 @@ plt.savefig("static/graphs/diesel_error.png")
 plt.show()
 plt.close()
 print("Diesel Error Graph Saved Successfully.")
+
+# Scatter Plot (Actual vs Predicted)
+plt.figure(figsize=(7,6))
+plt.scatter(
+    y_test[:,0],
+    predictions[:,0],
+    alpha=0.6
+)
+plt.plot(
+    [y_test[:,0].min(), y_test[:,0].max()],
+    [y_test[:,0].min(), y_test[:,0].max()],
+    color="red",
+    linestyle="--"
+)
+plt.title("Petrol: Actual vs Predicted")
+plt.xlabel("Actual Price")
+plt.ylabel("Predicted Price")
+plt.grid(True)
 
 # Testing Summary
 print("\n" + "=" * 60)

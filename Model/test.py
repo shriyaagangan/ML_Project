@@ -25,6 +25,7 @@ os.makedirs("static/graphs", exist_ok=True)
 # Load the Trained Model
 print("\nLoading Trained Model...")
 print("=" * 60)
+model = None
 try:
     model = tf.keras.models.load_model("fuel_model.keras")
     print("Model Loaded Successfully.")
@@ -60,7 +61,10 @@ print("Number of Output Variables :", y_test.shape[1])
 
 # Predict Fuel Prices
 print("\nPredicting Fuel Prices...")
-predictions = model.predict(X_test)
+predictions = model.predict(
+    X_test,
+    verbose=0
+)
 print("Prediction Shape :", predictions.shape)
 print("Prediction Completed Successfully")
 
@@ -106,7 +110,10 @@ print("\nSample Prediction Results")
 print(result_df.head())
 
 # Save Prediction Results
-result_df.to_csv("prediction_results.csv", index=False)
+result_df.to_csv(
+    "static/prediction_results.csv",
+    index=False
+)
 print("\nPrediction Results Saved Successfully.")
 
 # Actual vs Predicted Petrol Price(scatter plot)
@@ -114,16 +121,17 @@ plt.figure(figsize=(7,6))
 plt.scatter(
     y_test[:,0],
     predictions[:,0],
-    alpha=0.5,
+    alpha=0.6,
     color="royalblue"
 )
 plt.plot(
     [y_test[:,0].min(), y_test[:,0].max()],
     [y_test[:,0].min(), y_test[:,0].max()],
     color="red",
+    linewidth=2,
     linestyle="--"
 )
-plt.title("Actual vs Predicted Petrol Price")
+plt.title("Petrol Price: Actual vs Predicted")
 plt.xlabel("Actual Petrol Price")
 plt.ylabel("Predicted Petrol Price")
 plt.grid(True)
@@ -131,25 +139,27 @@ plt.tight_layout()
 plt.savefig("static/graphs/petrol_prediction.png")
 plt.show()
 plt.close()
+print("Petrol Prediction Graph Saved Successfully.")
+
 
 # Actual vs Predicted Diesel Price
-plt.figure(figsize=(10,5))
-plt.plot(
+plt.figure(figsize=(7,6))
+plt.scatter(
     y_test[:,1],
-    label="Actual Diesel",
-    kde=True,
-    color="green"
+    predictions[:,1],
+    alpha=0.6,
+    color="darkgreen"
 )
 plt.plot(
-    predictions[:,1],
-    label="Predicted Diesel",
-    kde=True,
-    color="orange"
+    [y_test[:,1].min(), y_test[:,1].max()],
+    [y_test[:,1].min(), y_test[:,1].max()],
+    color="red",
+    linestyle="--",
+    linewidth=2
 )
-plt.title("Actual vs Predicted Diesel Price")
-plt.xlabel("Test Samples")
-plt.ylabel("Price (USD/Litre)")
-plt.legend()
+plt.title("Diesel Price: Actual vs Predicted")
+plt.xlabel("Actual Diesel Price")
+plt.ylabel("Predicted Diesel Price")
 plt.grid(True)
 plt.tight_layout()
 plt.savefig("static/graphs/diesel_prediction.png")
@@ -163,11 +173,19 @@ plt.figure(figsize=(8,5))
 plt.hist(
     petrol_error,
     bins=20,
-    color="skyblue"
+    color="skyblue",
+    edgecolor="black"
 )
-plt.title("Petrol Prediction Error")
+plt.axvline(
+    x=0,
+    color="red",
+    linestyle="--",
+    linewidth=2
+)
+plt.title("Distribution of Petrol Prediction Error")
 plt.xlabel("Error")
 plt.ylabel("Frequency")
+plt.grid(True)
 plt.tight_layout()
 plt.savefig("static/graphs/petrol_error.png")
 plt.show()
@@ -180,34 +198,24 @@ plt.figure(figsize=(8,5))
 plt.hist(
     diesel_error,
     bins=20,
-    color="lightgreen"
+    color="lightgreen",
+    edgecolor="black"
 )
-plt.title("Diesel Prediction Error")
+plt.axvline(
+    x=0,
+    color="red",
+    linestyle="--",
+    linewidth=2
+)
+plt.title("Distribution of Diesel Prediction Error")
 plt.xlabel("Error")
 plt.ylabel("Frequency")
+plt.grid(True)
 plt.tight_layout()
 plt.savefig("static/graphs/diesel_error.png")
 plt.show()
 plt.close()
 print("Diesel Error Graph Saved Successfully.")
-
-# Scatter Plot (Actual vs Predicted)
-plt.figure(figsize=(7,6))
-plt.scatter(
-    y_test[:,0],
-    predictions[:,0],
-    alpha=0.6
-)
-plt.plot(
-    [y_test[:,0].min(), y_test[:,0].max()],
-    [y_test[:,0].min(), y_test[:,0].max()],
-    color="red",
-    linestyle="--"
-)
-plt.title("Petrol: Actual vs Predicted")
-plt.xlabel("Actual Price")
-plt.ylabel("Predicted Price")
-plt.grid(True)
 
 # Testing Summary
 print("\n" + "=" * 60)
@@ -226,7 +234,7 @@ print("diesel_error.png")
 print("\nPrediction File")
 print("----------------------------")
 print("prediction_results.csv")
-print("\nTesting Completed Successfully.")
+print("\nModel Evaluation Completed Successfully.")
 print("=" * 60)
 print("PriceSense Testing Module Finished")
 print("=" * 60)

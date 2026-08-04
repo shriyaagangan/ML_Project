@@ -7,6 +7,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import tensorflow as tf
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.callbacks import EarlyStopping
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.models import Sequential
@@ -63,13 +65,22 @@ print("\nConverting Date Column...")
 df["date"] = pd.to_datetime(df["date"])
 print("Date Converted Successfully.")
 
-# Feature 
+# Feature
 print("\nCreating Date Features...")
 df["year"] = df["date"].dt.year
 df["month"] = df["date"].dt.month
 df["week_of_year"] = df["date"].dt.isocalendar().week.astype(int)
 df["day"] = df["date"].dt.day
+# Additional Features
+df["quarter"] = df["date"].dt.quarter
+df["day_of_week"] = df["date"].dt.dayofweek
+df["day_of_year"] = df["date"].dt.dayofyear
 print("Date Features Created Successfully.")
+# Previous Day Fuel Prices
+df["petrol_prev"] = df["petrol_usd_liter"].shift(1)
+df["diesel_prev"] = df["diesel_usd_liter"].shift(1)
+# Remove first row created by shift
+df.dropna(inplace=True)
 
 # Remove Missing Values
 important_columns = [
@@ -173,13 +184,20 @@ features = [
     "year",
     "month",
     "week_of_year",
+    "day",
+    "quarter",
+    "day_of_week",
+    "day_of_year",
     "brent_crude_usd",
-    "tax_percentage"
+    "tax_percentage",
+    "petrol_prev",
+    "diesel_prev"
 ]
 target = [
     "petrol_usd_liter",
     "diesel_usd_liter"
 ]
+# df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 X = df[features]
 y = df[target]
 print("Features Selected Successfully.")
@@ -189,16 +207,10 @@ X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
     test_size=0.20,
-    random_state=42
+    shuffle=False
 )
 print("Training Samples :", len(X_train))
 print("Testing Samples :", len(X_test))
-
-# Save Testing Data
-print("\nSaving Testing Dataset...")
-np.save("X_test.npy", X_test)
-np.save("y_test.npy", y_test)
-print("Testing Data Saved Successfully.")
 
 # Feature Scaling
 print("\nScaling Features...")
@@ -206,6 +218,12 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 print("Feature Scaling Completed.")
+
+# Save Testing Data
+print("\nSaving Testing Dataset...")
+np.save("X_test.npy", X_test)
+np.save("y_test.npy", y_test)
+print("Testing Data Saved Successfully.")
 
 # Save Scaler
 print("\nSaving Scaler...")
@@ -226,24 +244,24 @@ print("=" * 60)
 # Build Deep Learning Model
 print("\nBuilding Deep Learning Model...")
 model = Sequential()
-# Input Layer
 model.add(Dense(
-    64,
+    128,
     activation="relu",
     input_shape=(X_train.shape[1],)
 ))
-# Hidden Layer 1
-model.add(Dropout(0.20))
+model.add(Dropout(0.30))
+model.add(Dense(
+    64,
+    activation="relu"
+))
 model.add(Dense(
     32,
     activation="relu"
 ))
-# Hidden Layer 2
 model.add(Dense(
     16,
     activation="relu"
 ))
-# Output Layer
 model.add(Dense(
     2,
     activation="linear"
@@ -253,8 +271,11 @@ print("Model Created Successfully.")
 
 # Compile Model
 print("\nCompiling Model...")
+optimizer = Adam(
+    learning_rate=0.0005
+)
 model.compile(
-    optimizer="adam",
+    optimizer=optimizer,
     loss="mean_squared_error",
     metrics=["mae"]
 )
@@ -262,11 +283,17 @@ print("Model Compiled Successfully.")
 
 # Train Model
 print("\nTraining Model...")
+early_stopping = EarlyStopping(
+    monitor="val_loss",
+    patience=10,
+    restore_best_weights=True
+)
 history = model.fit(
     X_train,
     y_train,
     validation_data=(X_test, y_test),
-    epochs=50,
+    epochs=150,
+    callbacks=[early_stopping],
     batch_size=32,
     verbose=1
 )
@@ -353,5 +380,4 @@ print("\nModel Training Completed Successfully.")
 print("="*60)
 print("PriceSense Training Module Finished")
 print("="*60)
-
 

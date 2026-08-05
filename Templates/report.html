@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>PriceSense | Report</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+<div class="container">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+        <div class="logo-section">
+            <img src="{{ url_for('static', filename='images/logo.png') }}"
+                 class="sidebar-logo"
+                 alt="PriceSense Logo">
+            <h2>
+                PriceSense
+            </h2>
+        </div>
+
+        <ul>
+            <li>
+                <a href="{{ url_for('dashboard') }}">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('prediction') }}">
+                    <i class="fa-solid fa-gas-pump"></i>
+                    Prediction
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('analysis') }}">
+                    <i class="fa-solid fa-chart-column"></i>
+                    Analysis
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('history') }}">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    History
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="{{ url_for('report') }}">
+                    <i class="fa-solid fa-file-lines"></i>
+                    Report
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('about') }}">
+                    <i class="fa-solid fa-circle-info"></i>
+                    About
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('logout') }}">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+        <header>
+            <h1>
+                Model Performance Report
+            </h1>
+
+            <h4>
+                Welcome,
+                <strong>{{ username }}</strong>
+            </h4>
+        </header>
+
+        <!-- ================= DESCRIPTION ================= -->
+        <p class="form-description">
+            This report displays the performance of the trained
+            Deep Learning model used for fuel price prediction.
+        </p>
+
+        <!-- ================= MODEL DETAILS ================= -->
+
+        <div class="card">
+            <h2>
+                Model Information
+            </h2>
+
+            <table class="report-table">
+                <tr>
+                    <td><strong>Model Name</strong></td>
+                    <td>{{ model_name }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Algorithm</strong></td>
+                    <td>TensorFlow Deep Learning</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Model Status</strong></td>
+                    <td>Trained Successfully</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Dataset</strong></td>
+                    <td>Fuel Price Historical Dataset (2020–2026)</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Input Features</strong></td>
+                    <td>{{ total_features }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Optimizer</strong></td>
+                    <td>Adam</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Loss Function</strong></td>
+                    <td>Mean Squared Error</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ================= PERFORMANCE ================= -->
+
+        <div class="card">
+            <h2>
+                Performance Metrics
+            </h2>
+
+            <table class="report-table">
+                <tr>
+                    <td><strong>Petrol MAE</strong></td>
+                    <td>{{ petrol_mae }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Diesel MAE</strong></td>
+                    <td>{{ diesel_mae }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Petrol R² Score</strong></td>
+                    <td>{{ petrol_r2 }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Diesel R² Score</strong></td>
+                    <td>{{ diesel_r2 }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ================= MODEL GRAPH ================= -->
+
+        <div class="card">
+            <h2>
+                Model Performance Graph
+            </h2>
+
+            <img src="{{ url_for('static', filename='loss_curve.png') }}"
+                class="report-image"
+                alt="Training Loss Curve">
+        </div>
+    </main>
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+    <p>
+        © 2026 PriceSense
+    </p>
+
+    <p>
+        Developed using Python, Flask, TensorFlow, NumPy and Pandas
+    </p>
+
+    <p>
+        Final Year Diploma Internship Project
+    </p>
+
+</footer>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
+
+

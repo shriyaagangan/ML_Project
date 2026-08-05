@@ -36,7 +36,7 @@
 
 <div class="background"></div>
 
-<div class="container">
+<div class="container-fluid">
 
 <div class="row justify-content-center align-items-center min-vh-100">
 
@@ -49,10 +49,12 @@
             <img src="{{ url_for('static', filename='images/logo.png') }}"
                  class="project-logo">
 
+            <img src="{{ url_for('static', filename='images/fuel_ai.png') }}"
+                class="hero-image"
+                alt="Fuel AI">
+
             <h1>
-
                 PriceSense
-
             </h1>
 
             <h3>
@@ -109,6 +111,25 @@
 
                     Historical Fuel Price Dataset (2020-2026)
 
+                </div>
+
+            </div>
+
+            <div class="stats-container">
+
+                <div class="stat-card">
+                    <h2>99.28%</h2>
+                    <p>Petrol Accuracy</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2>99.17%</h2>
+                    <p>Diesel Accuracy</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2>2020-2026</h2>
+                    <p>Dataset</p>
                 </div>
 
             </div>
@@ -253,8 +274,11 @@
 
                 Final Year Diploma Internship Project
 
-            </div>
+                <br>
 
+                Python • Flask • TensorFlow
+
+            </div>
         </div>
 
     </div>
@@ -263,7 +287,7 @@
 
 </div>
 
-<footer>
+<footer class="login-footer">
     <p>
        Version 1.0
     </p>

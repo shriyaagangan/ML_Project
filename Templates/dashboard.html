@@ -21,6 +21,7 @@
 </head>
 
 <body class="dashboard-body">
+
 <!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
     <div class="container">
@@ -32,10 +33,19 @@
         </a>
 
         <div class="ms-auto d-flex align-items-center">
-            <span class="welcome-text">
-                <i class="fa-solid fa-user-circle"></i>
-                {{ username }}
-            </span>
+            <div class="welcome-text">
+
+                <i class="fa-solid fa-circle-user"></i>
+
+                <span>
+
+                Welcome,
+
+                <strong>{{ username }}</strong>
+
+                </span>
+
+            </div>
 
             <a href="{{ url_for('logout') }}"
                class="btn btn-danger ms-3">
@@ -46,31 +56,81 @@
     </div>
 </nav>
 
+<div class="container mt-3">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+
+{% for category, message in messages %}
+
+<div class="alert alert-{{ category }} alert-dismissible fade show">
+
+{{ message }}
+
+<button
+type="button"
+class="btn-close"
+data-bs-dismiss="alert">
+
+</button>
+
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+{% endwith %}
+
+</div>
+
 <!-- ================= HERO SECTION ================= -->
 <section class="dashboard-banner">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-7">
                 <h1>
-                    <i class="fa-solid fa-chart-simple"></i>
-                    PriceSense Dashboard
+                    Welcome Back,
+                    <span>{{ username }}</span> 
                 </h1>
-                
+
+                <h3>
+                    Dynamic Fuel Price Forecast Platform
+                </h3>
+
                 <p>
-                    Dynamic Fuel Price Forecast Platform using Deep Learning,
-                    Historical Fuel Prices, Brent Crude Oil and Tax Analysis.
+                    Predict future Petrol and Diesel prices using Artificial Intelligence,
+                    Deep Learning, Brent Crude Oil trends and Historical Fuel Price Analysis.
                 </p>
-                
-                <a href="{{ url_for('prediction') }}"
-                class="btn btn-primary btn-lg">
-                <i class="fa-solid fa-chart-line"></i>
-                    Start Prediction
-                </a>
+
+                <div class="hero-buttons">
+
+                    <a href="{{ url_for('prediction') }}"
+                    class="btn btn-primary btn-lg">
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        Start Prediction
+
+                    </a>
+
+                    <a href="{{ url_for('analysis') }}"
+                    class="btn btn-outline-light btn-lg">
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                        View Analysis
+
+                    </a>
+
+                </div>
             </div>
 
             <div class="col-lg-5 text-center">
-                <img src="{{ url_for('static', filename='images/logo.png') }}"
-                class="dashboard-logo">
+                <img src="{{ url_for('static', filename='images/fuel_dashboard.png') }}"
+                class="dashboard-logo"
+                alt="Dashboard Illustration">
             </div>
         </div>
     </div>
@@ -124,6 +184,213 @@
             </div>
         </div>
     </div>
+
+<!-- ================= DASHBOARD STATS ================= -->
+
+<div class="dashboard-stats mt-5">
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <i class="fa-solid fa-database"></i>
+
+                <h2>2020 - 2026</h2>
+
+                <p>Historical Dataset</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <i class="fa-solid fa-brain"></i>
+
+                <h2>Deep Learning</h2>
+
+                <p>Prediction Model</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <i class="fa-solid fa-gas-pump"></i>
+
+                <h2>Petrol & Diesel</h2>
+
+                <p>Fuel Types</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <h2>99%</h2>
+
+                <p>Prediction Accuracy</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= AI INFORMATION ================= -->
+
+<div class="ai-banner mt-5">
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-8">
+
+            <h2>
+
+                <i class="fa-solid fa-robot"></i>
+
+                AI Fuel Forecast Engine
+
+            </h2>
+
+            <p>
+
+                PriceSense uses Deep Learning,
+                Historical Fuel Prices,
+                Brent Crude Oil,
+                Tax Analysis and Seasonal Trends
+                to forecast future Petrol and Diesel prices.
+
+            </p>
+
+        </div>
+
+        <div class="col-lg-4 text-center">
+
+            <i class="fa-solid fa-microchip ai-icon"></i>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= MARKET OVERVIEW ================= -->
+
+<div class="market-card">
+
+    <h2>
+        <i class="fa-solid fa-earth-americas"></i>
+        Fuel Market Overview
+    </h2>
+
+    <div class="row text-center">
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="market-box">
+
+                <i class="fa-solid fa-oil-can"></i>
+
+                <h4>$82.45</h4>
+
+                <p>Brent Crude</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="market-box">
+
+                <i class="fa-solid fa-percent"></i>
+
+                <h4>18%</h4>
+
+                <p>Tax Rate</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="market-box">
+
+                <i class="fa-solid fa-robot"></i>
+
+                <h4>Online</h4>
+
+                <p>AI Engine</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="market-box">
+
+                <i class="fa-solid fa-database"></i>
+
+                <h4>2020-2026</h4>
+
+                <p>Dataset</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= FUEL PRICE TREND ================= -->
+
+<div class="graph-preview">
+
+    <div class="graph-header">
+
+        <h2>
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Fuel Price Trend Analysis
+
+        </h2>
+
+        <p>
+
+            Historical Petrol and Diesel Price Trend (2020–2026)
+
+        </p>
+
+    </div>
+
+    <div class="graph-image">
+
+        <img src="{{ url_for('static', filename='graphs/price_trend.png') }}"
+             alt="Fuel Price Trend">
+
+    </div>
+
+</div>
+
 <!-- ================= PROJECT OVERVIEW ================= -->
 <div class="overview-card mt-5">
     <h2>
@@ -199,45 +466,132 @@
     </div>
 </div>
 
+<div class="latest-card mt-5">
+
+<h2>
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+Latest Prediction
+
+</h2>
+
+<div class="table-responsive">
+
+<table class="table table-hover table-striped">
+
+<thead>
+
+<tr>
+
+<th>Date</th>
+<th>Petrol</th>
+<th>Diesel</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>No Prediction Yet</td>
+
+<td>--</td>
+
+<td>--</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
 <!-- ================= TECHNOLOGY ================= -->
+
 <div class="technology-card mt-5">
+
     <h2>
         Technology Stack
     </h2>
-    <div class="row text-center mt-4">
-        <div class="col-6 col-md-3">
+
+    <div class="row text-center mt-4 g-4">
+
+        <div class="col-6 col-md-2">
             <i class="fa-brands fa-python tech-icon"></i>
             <p>Python</p>
         </div>
-        <div class="col-6 col-md-3">
-            <i class="fa-solid fa-brain tech-icon"></i>
-            <p>TensorFlow</p>
-        </div>
-        <div class="col-6 col-md-3">
-            <i class="fa-solid fa-database tech-icon"></i>
-            <p>Pandas</p>
-        </div>
-        <div class="col-6 col-md-3">
-            <i class="fa-solid fa-globe tech-icon"></i>
+
+        <div class="col-6 col-md-2">
+            <i class="fa-solid fa-server tech-icon"></i>
             <p>Flask</p>
         </div>
+
+        <div class="col-6 col-md-2">
+            <i class="fa-solid fa-robot tech-icon"></i>
+            <p>TensorFlow</p>
+        </div>
+
+        <div class="col-6 col-md-2">
+            <i class="fa-solid fa-calculator tech-icon"></i>
+            <p>NumPy</p>
+        </div>
+
+        <div class="col-6 col-md-2">
+            <i class="fa-solid fa-table tech-icon"></i>
+            <p>Pandas</p>
+        </div>
+
+        <div class="col-6 col-md-2">
+            <i class="fa-brands fa-bootstrap tech-icon"></i>
+            <p>Bootstrap</p>
+        </div>
+
     </div>
+
 </div>
 </div>
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer mt-5">
     <div class="container text-center">
+        <img src="{{ url_for('static', filename='images/logo.png') }}"
+        class="footer-logo"
+        alt="PriceSense Logo">
+        <h4>
+            PriceSense
+
+        </h4>
         <p>
-            © 2026 PriceSense
+
+            Dynamic Fuel Price Forecast Platform
+
         </p>
         <p>
-            Developed using Flask, TensorFlow and Bootstrap
+
+            Python • Flask • TensorFlow • Bootstrap
+
         </p>
+
         <p>
+
             Final Year Diploma Internship Project
+
         </p>
+
+        <p>
+
+            © 2026 PriceSense
+
+        </p>
+
     </div>
+
 </footer>
 
 <!-- Bootstrap -->

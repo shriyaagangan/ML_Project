@@ -17,7 +17,7 @@ from flask import (
 
 # Create Flask Application(app)
 app = Flask(__name__)
-app.secret_key =  "pricesense123"  
+app.secret_key = "pricesense123"
 
 # Create Required Folder
 os.makedirs("static", exist_ok=True)
@@ -73,8 +73,14 @@ print("=" * 60)
 print("PriceSense Web Application Ready")
 print("=" * 60)
 
+# home page
+
+@app.route("/")
+def home():
+    return render_template("home.html")
+
 # Login Page
-@app.route("/", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if "username" in session:
         return redirect(url_for("dashboard"))
@@ -89,6 +95,11 @@ def login():
             flash("Invalid Username or Password", "danger")
             return redirect(url_for("login"))
     return render_template("login.html")
+
+# sign up page
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
 
 # Dashboard
 @app.route("/dashboard")
@@ -115,7 +126,7 @@ def dashboard():
 def logout():
     session.clear()
     flash("Logged Out Successfully.", "info")
-    return redirect(url_for("login"))
+    return redirect(url_for("home"))
     
 # Prediction Page
 @app.route("/prediction", methods=["GET", "POST"])
@@ -233,24 +244,26 @@ def history():
 # Analysis Page
 @app.route("/analysis")
 def analysis():
+
     if "username" not in session:
         return redirect(url_for("login"))
     return render_template(
         "analysis.html",
         username=session["username"],
-        trend_graph="price_trend.png",
-        petrol_distribution="petrol_distribution.png",
-        diesel_distribution="diesel_distribution.png",
-        brent_graph="brent_price.png",
-        monthly_graph="monthly_average.png",
-        heatmap="correlation_heatmap.png",
-        loss_graph="loss_curve.png",
-        mae_graph="mae_curve.png",
-        petrol_prediction="petrol_prediction.png",
-        diesel_prediction="diesel_prediction.png",
-        petrol_error="petrol_error.png",
-        diesel_error="diesel_error.png"
+        trend_graph="graphs/price_trend.png",
+        petrol_distribution="graphs/petrol_distribution.png",
+        diesel_distribution="graphs/diesel_distribution.png",
+        brent_graph="graphs/brent_price.png",
+        monthly_graph="graphs/monthly_average.png",
+        heatmap="graphs/correlation_heatmap.png",
+        loss_graph="graphs/loss_curve.png",
+        mae_graph="graphs/mae_curve.png",
+        petrol_prediction="graphs/petrol_prediction.png",
+        diesel_prediction="graphs/diesel_prediction.png",
+        petrol_error="graphs/petrol_error.png",
+        diesel_error="graphs/diesel_error.png"
     )
+
 
 # Report Page
 @app.route("/report")
@@ -259,7 +272,13 @@ def report():
         return redirect(url_for("login"))
     return render_template(
         "report.html",
-        username=session["username"]
+        username=session["username"],
+        model_name="PriceSense Deep Learning Fuel Price Prediction Model",
+        total_features=len(features),
+        petrol_mae="0.32",
+        diesel_mae="0.28",
+        petrol_r2="99.28%",
+        diesel_r2="99.17%"
     )
     
 # About Page

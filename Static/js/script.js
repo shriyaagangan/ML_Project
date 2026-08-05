@@ -1,339 +1,181 @@
 /*==================================================
-            PRICESENSE - JAVASCRIPT
-    Dynamic Fuel Price Forecast Platform
-==================================================*/
-
-
-/*==================================================
-            PAGE LOADED MESSAGE
+            PRICESENSE JAVASCRIPT
+        Dynamic Fuel Price Forecast Platform
 ==================================================*/
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    console.log("PriceSense Website Loaded Successfully.");
+    console.log("PriceSense Loaded Successfully");
+    // Auto Close Alerts
+    const alerts = document.querySelectorAll(".alert");
 
-});
-
-
-/*==================================================
-            AUTO HIDE FLASH MESSAGE
-==================================================*/
-
-const alerts = document.querySelectorAll(".alert");
-
-alerts.forEach(function(alert){
-
-    setTimeout(function(){
-
-        alert.style.opacity = "0";
+    alerts.forEach(function(alert){
 
         setTimeout(function(){
 
-            alert.style.display = "none";
+            alert.style.transition="0.5s";
+            alert.style.opacity="0";
 
-        },500);
+            setTimeout(function(){
 
-    },3000);
+                alert.remove();
 
-});
+            },500);
 
-
-/*==================================================
-            INPUT FOCUS EFFECT
-==================================================*/
-
-const inputs = document.querySelectorAll("input");
-
-inputs.forEach(function(input){
-
-    input.addEventListener("focus", function(){
-
-        this.parentElement.classList.add("active");
+        },3000);
 
     });
-
-    input.addEventListener("blur", function(){
-
-        this.parentElement.classList.remove("active");
-
-    });
-
-});
-
-
-/*==================================================
-            SIDEBAR ACTIVE LINK
+    /*==================================================
+            ANIMATED COUNTERS
 ==================================================*/
 
-const menuLinks = document.querySelectorAll(".sidebar ul li a");
+    const counters = document.querySelectorAll(".stats-card h2, .dashboard-card h3");
 
-menuLinks.forEach(function(link){
+    counters.forEach(counter => {
 
-    link.addEventListener("click", function(){
+        const target = counter.innerText;
 
-        menuLinks.forEach(function(item){
+        if(!isNaN(parseFloat(target))){
 
-            item.parentElement.classList.remove("active");
+            let count = 0;
+            const end = parseFloat(target);
 
-        });
+            const speed = end / 80;
 
-        this.parentElement.classList.add("active");
-
-    });
-
-});
-
-/*==================================================
-            SCROLL TO TOP BUTTON
-==================================================*/
-
-const scrollButton = document.getElementById("scrollTopBtn");
-
-window.addEventListener("scroll", function () {
-
-    if (scrollButton) {
-
-        if (window.scrollY > 250) {
-
-            scrollButton.style.display = "block";
-
-        }
-
-        else {
-
-            scrollButton.style.display = "none";
-
-        }
-
-    }
-
-});
-
-
-if (scrollButton) {
-
-    scrollButton.addEventListener("click", function () {
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    });
-
-}
-
-
-/*==================================================
-            CARD HOVER EFFECT
-==================================================*/
-
-const cards = document.querySelectorAll(
-
-    ".dashboard-card, .menu-card, .graph-card, .card, .result-card"
-
-);
-
-cards.forEach(function(card){
-
-    card.addEventListener("mouseenter", function(){
-
-        this.style.transform = "translateY(-8px)";
-
-    });
-
-    card.addEventListener("mouseleave", function(){
-
-        this.style.transform = "translateY(0px)";
-
-    });
-
-});
-
-
-/*==================================================
-            IMAGE FADE EFFECT
-==================================================*/
-
-const images = document.querySelectorAll("img");
-
-images.forEach(function(image){
-
-    image.style.opacity = "0";
-
-    image.style.transition = "opacity 0.8s ease";
-
-    image.onload = function(){
-
-        image.style.opacity = "1";
-
-    };
-
-});
-
-
-/*==================================================
-            DASHBOARD NUMBER ANIMATION
-==================================================*/
-
-const numbers = document.querySelectorAll(".dashboard-card h3");
-
-numbers.forEach(function(number){
-
-    const target = parseFloat(number.innerText);
-
-    if(!isNaN(target)){
-
-        let count = 0;
-
-        const speed = target / 40;
-
-        const updateCounter = function(){
-
-            if(count < target){
+            const updateCounter = () =>{
 
                 count += speed;
 
-                number.innerText = Math.round(count);
+                if(count < end){
 
-                requestAnimationFrame(updateCounter);
+                    counter.innerText = count.toFixed(0);
 
-            }
+                    requestAnimationFrame(updateCounter);
 
-            else{
+                }
 
-                number.innerText = target;
+                else{
 
-            }
+                    if(target.includes("%")){
 
-        };
+                        counter.innerText = end.toFixed(2) + "%";
 
-        updateCounter();
+                    }
 
-    }
+                    else{
 
-});
+                        counter.innerText = target;
 
-/*==================================================
-        FORM VALIDATION
+                    }
+
+                }
+
+            };
+
+            updateCounter();
+
+        }
+
+    });
+    /*==================================================
+            SCROLL REVEAL ANIMATION
 ==================================================*/
 
-const predictionForm = document.querySelector("form");
+    const revealItems = document.querySelectorAll(
 
-if (predictionForm) {
+    ".dashboard-card,\
+    .stats-card,\
+    .market-box,\
+    .menu-card,\
+    .latest-card,\
+    .technology-card,\
+    .graph-card,\
+    .overview-card"
 
-    predictionForm.addEventListener("submit", function (event) {
+    );
 
-        const inputs = predictionForm.querySelectorAll("input[required]");
+    const reveal = () =>{
 
-        let valid = true;
+        revealItems.forEach(item=>{
 
-        inputs.forEach(function (input) {
+            const top = item.getBoundingClientRect().top;
 
-            if (input.value.trim() === "") {
+            const windowHeight = window.innerHeight;
 
-                valid = false;
+            if(top < windowHeight - 80){
 
-                input.style.border = "2px solid red";
-
-            }
-
-            else {
-
-                input.style.border = "2px solid #2563EB";
+                item.classList.add("show-card");
 
             }
 
         });
 
-        if (!valid) {
+    };
 
-            event.preventDefault();
+    window.addEventListener("scroll", reveal);
 
-            alert("Please fill all required fields.");
+    reveal();
 
-        }
+    /*==================================================
+                BUTTON RIPPLE EFFECT
+    ==================================================*/
 
-    });
+    const buttons = document.querySelectorAll(
 
-}
+    ".btn-primary,\
+    .login-btn,\
+    .menu-card,\
+    .btn-danger"
 
+    );
 
-/*==================================================
-        RESET FORM CONFIRMATION
-==================================================*/
+    buttons.forEach(button=>{
 
-const resetButton = document.querySelector(".btn-secondary");
+        button.addEventListener("click",function(e){
 
-if (resetButton) {
+            const circle=document.createElement("span");
 
-    resetButton.addEventListener("click", function () {
+            const diameter=Math.max(
 
-        setTimeout(function () {
+                this.clientWidth,
+                this.clientHeight
 
-            alert("Form has been cleared successfully.");
+            );
 
-        }, 100);
+            circle.style.width=diameter+"px";
+            circle.style.height=diameter+"px";
 
-    });
+            circle.style.left=e.offsetX-diameter/2+"px";
+            circle.style.top=e.offsetY-diameter/2+"px";
 
-}
+            circle.classList.add("ripple");
 
+            const ripple=this.getElementsByClassName("ripple")[0];
 
-/*==================================================
-        PREDICT BUTTON LOADING
-==================================================*/
+            if(ripple){
 
-const submitButton = document.querySelector(".btn-primary");
+                ripple.remove();
 
-if (predictionForm && submitButton) {
+            }
 
-    predictionForm.addEventListener("submit", function () {
+            this.appendChild(circle);
 
-        submitButton.disabled = true;
-
-        submitButton.innerHTML =
-
-            '<i class="fa-solid fa-spinner fa-spin"></i> Predicting...';
-
-    });
-
-}
-
-
-/*==================================================
-        SMOOTH SCROLL
-==================================================*/
-
-document.querySelectorAll("a[href^='#']").forEach(function(anchor){
-
-    anchor.addEventListener("click", function(e){
-
-        e.preventDefault();
-
-        const target = document.querySelector(this.getAttribute("href"));
-
-        if(target){
-
-            target.scrollIntoView({
-
-                behavior:"smooth"
-
-            });
-
-        }
+        });
 
     });
+    /*==================================================
+                    PAGE FADE EFFECT
+    ==================================================*/
 
+    document.body.style.opacity="0";
+
+    setTimeout(function(){
+
+        document.body.style.transition="opacity .8s";
+
+        document.body.style.opacity="1";
+
+    },100);
+    
 });
-
-
-/*==================================================
-        CONSOLE MESSAGE
-==================================================*/
-
-console.log("PriceSense JavaScript Loaded Successfully.");
 

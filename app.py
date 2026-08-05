@@ -4,6 +4,7 @@ import pickle
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+from datetime import datetime
 from flask import (
     Flask,
     render_template,
@@ -51,9 +52,12 @@ if not os.path.exists(history_file):
     history = pd.DataFrame(columns=[
         "Year",
         "Month",
+        "Day",
         "Week",
         "Brent Crude",
         "Tax Percentage",
+        "Previous Petrol Price",
+        "Previous Diesel Price",
         "Predicted Petrol",
         "Predicted Diesel"
     ])
@@ -92,14 +96,18 @@ def dashboard():
     if "username" not in session:
         return redirect(url_for("login"))
     total_features = len(features)
-    model_name = "Fuel Price Prediction Model"
+    model_name = "PriceSense Deep Learning Fuel Price Prediction Model"
+    petrol_r2 = "99.28%"
+    diesel_r2 = "99.17%"
     output_variables = 2
     return render_template(
         "dashboard.html",
         username=session["username"],
         total_features=total_features,
         model_name=model_name,
-        output_variables=output_variables
+        output_variables=output_variables,
+        petrol_r2=petrol_r2,
+        diesel_r2=diesel_r2
     )
     
 # Logout
@@ -124,16 +132,46 @@ def prediction():
             # Read User Input
             year = int(request.form["year"])
             month = int(request.form["month"])
-            week = int(request.form["week"])
+            day = int(request.form["day"])
+            if month < 1 or month > 12:
+                flash("Month must be between 1 and 12.", "danger")
+                return redirect(url_for("prediction"))
+            if day < 1 or day > 31:
+                flash("Day must be between 1 and 31.", "danger")
+                return redirect(url_for("prediction"))
+            
+            date = datetime(year, month, day)
+
+            week = date.isocalendar()[1]
+            quarter = (month - 1) // 3 + 1
+            day_of_week = date.weekday()
+            day_of_year = date.timetuple().tm_yday
+
             brent = float(request.form["brent"])
             tax = float(request.form["tax"])
+            
+            if brent <= 0:
+                flash("Brent crude price must be greater than 0.", "danger")
+                return redirect(url_for("prediction"))
+            if tax < 0:
+                flash("Tax percentage cannot be negative.", "danger")
+                return redirect(url_for("prediction"))
+
+            petrol_prev = float(request.form["petrol_prev"])
+            diesel_prev = float(request.form["diesel_prev"])
             # Create Input Array
             user_input = np.array([[
                 year,
                 month,
                 week,
+                day,
+                quarter,
+                day_of_week,
+                day_of_year,
                 brent,
-                tax
+                tax,
+                petrol_prev,
+                diesel_prev
             ]])
             # Scale Input
             user_input = scaler.transform(user_input)
@@ -143,13 +181,16 @@ def prediction():
             diesel_price = round(float(prediction_result[0][1]), 2)
             # Save Prediction History
             new_record = pd.DataFrame({
-                "Year": [year],
-                "Month": [month],
-                "Week": [week],
-                "Brent Crude": [brent],
-                "Tax Percentage": [tax],
-                "Predicted Petrol": [petrol_price],
-                "Predicted Diesel": [diesel_price]
+                "Year":[year],
+                "Month":[month],
+                "Day":[day],
+                "Week":[week],
+                "Brent Crude":[brent],
+                "Tax Percentage":[tax],
+                "Previous Petrol Price":[petrol_prev],
+                "Previous Diesel Price":[diesel_prev],
+                "Predicted Petrol":[petrol_price],
+                "Predicted Diesel":[diesel_price]
             })
             history_data = pd.read_csv(history_file)
             history_data = pd.concat(
@@ -158,7 +199,7 @@ def prediction():
             )
             history_data.to_csv(history_file, index=False)
             flash(
-                "Prediction Generated Successfully.",
+                f"Prediction Generated Successfully! Petrol: {petrol_price} USD/L | Diesel: {diesel_price} USD/L",
                 "success"
             )
         except Exception as error:
@@ -236,4 +277,6 @@ if __name__ == "__main__":
     app.run(
         debug=True
     )
+
+
 

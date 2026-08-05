@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>PriceSense | Analysis</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+<div class="container">
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+        <div class="logo-section">
+            <img src="{{ url_for('static', filename='images/logo.png') }}"
+                 class="sidebar-logo"
+                 alt="PriceSense Logo">
+
+            <h2>
+                PriceSense
+            </h2>
+        </div>
+
+        <ul>
+            <li>
+                <a href="{{ url_for('dashboard') }}">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('prediction') }}">
+                    <i class="fa-solid fa-gas-pump"></i>
+                    Prediction
+                </a>
+
+            </li>
+            <li class="active">
+                <a href="{{ url_for('analysis') }}">
+                    <i class="fa-solid fa-chart-column"></i>
+                    Analysis
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('history') }}">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    History
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('report') }}">
+                    <i class="fa-solid fa-file-lines"></i>
+                    Report
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('about') }}">
+                    <i class="fa-solid fa-circle-info"></i>
+                    About
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('logout') }}">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+        <header>
+            <h1>
+                Fuel Price Analysis
+            </h1>
+
+            <h4>
+                Welcome,
+                <strong>{{ username }}</strong>
+            </h4>
+        </header>
+
+        <!-- ================= DESCRIPTION ================= -->
+
+        <p class="form-description">
+            The following charts are generated during model training
+            and testing. They help visualize fuel price trends,
+            distributions and model performance.
+        </p>
+
+        <!-- ================= CHARTS ================= -->
+
+        <div class="graph-container">
+            <div class="graph-card">
+                <h3>
+                    Fuel Price Trend
+                </h3>
+
+                <img src="{{ url_for('static', filename=trend_graph) }}"
+                     alt="Trend Graph">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Petrol Price Distribution
+                </h3>
+
+                <img src="{{ url_for('static', filename=petrol_distribution) }}"
+                     alt="Petrol Distribution">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Diesel Price Distribution
+                </h3>
+
+                <img src="{{ url_for('static', filename=diesel_distribution) }}"
+                     alt="Diesel Distribution">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Brent Crude Oil Price
+                </h3>
+
+                <img src="{{ url_for('static', filename=brent_graph) }}"
+                     alt="Brent Graph">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Monthly Average Fuel Price
+                </h3>
+
+                <img src="{{ url_for('static', filename=monthly_graph) }}"
+                     alt="Monthly Average">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Correlation Heatmap
+                </h3>
+
+                <img src="{{ url_for('static', filename=heatmap) }}"
+                     alt="Heatmap">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Training Loss Curve
+                </h3>
+
+                <img src="{{ url_for('static', filename=loss_graph) }}"
+                     alt="Loss Curve">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Mean Absolute Error Curve
+                </h3>
+
+                <img src="{{ url_for('static', filename=mae_graph) }}"
+                     alt="MAE Curve">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Petrol Prediction
+                </h3>
+
+                <img src="{{ url_for('static', filename=petrol_prediction) }}"
+                     alt="Petrol Prediction">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Diesel Prediction
+                </h3>
+
+                <img src="{{ url_for('static', filename=diesel_prediction) }}"
+                     alt="Diesel Prediction">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Petrol Error Analysis
+                </h3>
+
+                <img src="{{ url_for('static', filename=petrol_error) }}"
+                     alt="Petrol Error">
+            </div>
+
+            <div class="graph-card">
+                <h3>
+                    Diesel Error Analysis
+                </h3>
+
+                <img src="{{ url_for('static', filename=diesel_error) }}"
+                     alt="Diesel Error">
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+    <p>
+        © 2026 PriceSense
+    </p>
+
+    <p>
+        Developed using Python, Flask, TensorFlow, NumPy and Pandas
+    </p>
+
+    <p>
+        Final Year Diploma Internship Project
+    </p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
+
+

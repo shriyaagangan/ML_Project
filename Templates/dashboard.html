@@ -3,178 +3,249 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
     <title>PriceSense | Dashboard</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
-
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
           rel="stylesheet">
-
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body>
+<body class="dashboard-body">
 <!-- ================= NAVBAR ================= -->
-<nav class="navbar">
-    <div class="logo-section">
-        <img src="{{ url_for('static', filename='images/logo.png') }}"
-             class="nav-logo"
-             alt="Logo">
-        <h2>PriceSense</h2>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold"
+           href="{{ url_for('dashboard') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}"
+                 class="nav-logo">
+            PriceSense
+        </a>
 
-    <ul class="nav-links">
-        <li>
-            <a href="{{ url_for('dashboard') }}" class="active">
-                Dashboard
-            </a>
-        </li>
-        <li>
-            <a href="{{ url_for('prediction') }}">
-                Prediction
-            </a>
-        </li>
-        <li>
-            <a href="{{ url_for('history') }}">
-                History
-            </a>
-        </li>
-        <li>
-            <a href="{{ url_for('analysis') }}">
-                Analysis
-            </a>
-        </li>
-        <li>
-            <a href="{{ url_for('report') }}">
-                Report
-            </a>
-        </li>
-        <li>
-            <a href="{{ url_for('about') }}">
-                About
-            </a>
-        </li>
-        <li>
-            <a href="{{ url_for('logout') }}">
+        <div class="ms-auto d-flex align-items-center">
+            <span class="welcome-text">
+                <i class="fa-solid fa-user-circle"></i>
+                {{ username }}
+            </span>
+
+            <a href="{{ url_for('logout') }}"
+               class="btn btn-danger ms-3">
+                <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>
-        </li>
-    </ul>
+        </div>
+    </div>
 </nav>
 
-<!-- ================= MAIN CONTENT ================= -->
+<!-- ================= HERO SECTION ================= -->
+<section class="dashboard-banner">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1>
+                    <i class="fa-solid fa-chart-simple"></i>
+                    PriceSense Dashboard
+                </h1>
+                
+                <p>
+                    Dynamic Fuel Price Forecast Platform using Deep Learning,
+                    Historical Fuel Prices, Brent Crude Oil and Tax Analysis.
+                </p>
+                
+                <a href="{{ url_for('prediction') }}"
+                class="btn btn-primary btn-lg">
+                <i class="fa-solid fa-chart-line"></i>
+                    Start Prediction
+                </a>
+            </div>
 
-<div class="container">
-    <div class="welcome-card">
-        <h1>
-            Welcome,
-            {{ username }}
-        </h1>
-
-        <p>
-            PriceSense predicts Petrol and Diesel prices using
-            Deep Learning based on historical fuel prices,
-            Brent crude oil price and tax percentage.
-        </p>
-    </div>
-
-    <!-- ================= PROJECT INFORMATION ================= -->
-    <div class="dashboard-grid">
-        <div class="card">
-            <i class="fa-solid fa-microchip"></i>
-            <h3>Model</h3>
-            <p>
-                {{ model_name }}
-            </p>
-        </div>
-
-        <div class="card">
-            <i class="fa-solid fa-list-check"></i>
-            <h3>Features</h3>
-            <h2>
-                {{ total_features }}
-            </h2>
-
-        </div>
-
-        <div class="card">
-            <i class="fa-solid fa-chart-line"></i>
-            <h3>Output Variables</h3>
-            <h2>
-                {{ output_variables }}
-
-            </h2>
+            <div class="col-lg-5 text-center">
+                <img src="{{ url_for('static', filename='images/logo.png') }}"
+                class="dashboard-logo">
+            </div>
         </div>
     </div>
+</section>
 
-    <!-- ================= PROJECT DESCRIPTION ================= -->
-    <div class="info-card">
-        <h2>
-            Project Description
-        </h2>
-        <p>
-            PriceSense is a Machine Learning based Fuel Price
-            Forecast Platform developed as a Diploma Final Year
-            Internship Project.
-
-            The system predicts Petrol and Diesel prices using
-            historical fuel price data, Brent crude oil price,
-            tax percentage and seasonal information.
-        </p>
+<!-- ================= MODEL INFORMATION ================= -->
+<div class="container mt-5">
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <i class="fa-solid fa-microchip card-icon"></i>
+                <h6>
+                    Model
+                </h6>
+                <p>
+                    {{ model_name }}
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <i class="fa-solid fa-layer-group card-icon"></i>
+                <h6>
+                    Features
+                </h6>
+                <h3>
+                    {{ total_features }}
+                </h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <i class="fa-solid fa-gas-pump card-icon"></i>
+                <h6>
+                    Petrol R²
+                </h6>
+                <h3>
+                    {{ petrol_r2 }}
+                </h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <i class="fa-solid fa-oil-can card-icon"></i>
+                <h6>
+                    Diesel R²
+                </h6>
+                <h3>
+                    {{ diesel_r2 }}
+                </h3>
+            </div>
+        </div>
     </div>
+<!-- ================= PROJECT OVERVIEW ================= -->
+<div class="overview-card mt-5">
+    <h2>
+        Project Overview
+    </h2>
+    <p>
+        PriceSense is an AI-powered web application developed using
+        Python, TensorFlow and Flask.
 
-    <!-- ================= FEATURE LIST ================= -->
-    <div class="info-card">
-        <h2>
-            Application Modules
-        </h2>
-        <ul>
-            <li>Dashboard</li>
-            <li>Fuel Price Prediction</li>
-            <li>Prediction History</li>
-            <li>Data Analysis</li>
-            <li>Project Report</li>
-            <li>About Project</li>
-        </ul>
-    </div>
+        The system predicts future Petrol and Diesel prices
+        using historical fuel prices, Brent crude oil,
+        tax percentage and previous fuel prices.
 
-    <!-- ================= QUICK ACTION BUTTONS ================= -->
-    <div class="button-group">
+        It also provides data visualization,
+        prediction history and performance reports.
+    </p>
+</div>
+
+<!-- ================= QUICK ACCESS ================= -->
+<h2 class="section-title">
+    Quick Access
+</h2>
+<div class="row g-4">
+    <div class="col-lg-3 col-md-6">
         <a href="{{ url_for('prediction') }}"
-           class="btn">
-            Predict Fuel Price
+        class="menu-card">
+        <i class="fa-solid fa-chart-line"></i>
+        <h5>
+            Prediction
+        </h5>
+        <p>
+            Predict Petrol & Diesel Prices
+        </p>
         </a>
+    </div>
 
+    <div class="col-lg-3 col-md-6">
         <a href="{{ url_for('analysis') }}"
-           class="btn">
-            View Analysis
+        class="menu-card">
+        <i class="fa-solid fa-chart-column"></i>
+        <h5>
+            Analysis
+        </h5>
+        <p>
+            Visual Charts & Graphs
+        </p>
         </a>
+    </div>
 
+    <div class="col-lg-3 col-md-6">
         <a href="{{ url_for('history') }}"
-           class="btn">
-            Prediction History
+        class="menu-card">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <h5>
+            History
+        </h5>
+        <p>
+            View Previous Predictions
+        </p>
+        </a>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <a href="{{ url_for('report') }}"
+        class="menu-card">
+        <i class="fa-solid fa-file-lines"></i>
+        <h5>
+            Report
+        </h5>
+        <p>
+            Model Performance Report
+        </p>
         </a>
     </div>
 </div>
 
+<!-- ================= TECHNOLOGY ================= -->
+<div class="technology-card mt-5">
+    <h2>
+        Technology Stack
+    </h2>
+    <div class="row text-center mt-4">
+        <div class="col-6 col-md-3">
+            <i class="fa-brands fa-python tech-icon"></i>
+            <p>Python</p>
+        </div>
+        <div class="col-6 col-md-3">
+            <i class="fa-solid fa-brain tech-icon"></i>
+            <p>TensorFlow</p>
+        </div>
+        <div class="col-6 col-md-3">
+            <i class="fa-solid fa-database tech-icon"></i>
+            <p>Pandas</p>
+        </div>
+        <div class="col-6 col-md-3">
+            <i class="fa-solid fa-globe tech-icon"></i>
+            <p>Flask</p>
+        </div>
+    </div>
+</div>
+</div>
+
 <!-- ================= FOOTER ================= -->
-<footer>
-    <p>
-        © 2026 PriceSense |
-        Diploma Final Year Internship Project
-    </p>
+<footer class="footer mt-5">
+    <div class="container text-center">
+        <p>
+            © 2026 PriceSense
+        </p>
+        <p>
+            Developed using Flask, TensorFlow and Bootstrap
+        </p>
+        <p>
+            Final Year Diploma Internship Project
+        </p>
+    </div>
 </footer>
 
-<!-- JavaScript -->
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
 </body>
-
 </html>
+
+

@@ -2,10 +2,9 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
     <title>PriceSense | Prediction</title>
 
     <!-- CSS -->
@@ -19,29 +18,22 @@
     <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 </head>
 
 <body>
-
 <div class="container">
-
-    <!-- Sidebar -->
-
+    <!-- ================= SIDEBAR ================= -->
     <aside class="sidebar">
-
         <div class="logo-section">
-
             <img src="{{ url_for('static', filename='images/logo.png') }}"
                  class="sidebar-logo"
-                 alt="Logo">
-
-            <h2>PriceSense</h2>
-
+                 alt="PriceSense Logo">
+            <h2>
+                PriceSense
+            </h2>
         </div>
 
         <ul>
-
             <li>
                 <a href="{{ url_for('dashboard') }}">
                     <i class="fa-solid fa-chart-line"></i>
@@ -56,224 +48,243 @@
                 </a>
             </li>
 
-            <li><a href="{{ url_for('history') }}">
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-                    History
-                </a>
-            </li>
-
-            <li><a href="{{ url_for('analysis') }}">
+            <li>
+                <a href="{{ url_for('analysis') }}">
                     <i class="fa-solid fa-chart-column"></i>
                     Analysis
                 </a>
             </li>
 
-            <li><a href="{{ url_for('report') }}">
+            <li>
+                <a href="{{ url_for('history') }}">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    History
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('report') }}">
                     <i class="fa-solid fa-file-lines"></i>
                     Report
                 </a>
             </li>
 
-            <li><a href="{{ url_for('about') }}">
-                    <i class="fa-solid fa-right-from-bracket"></i>
+            <li>
+                <a href="{{ url_for('about') }}">
+                    <i class="fa-solid fa-circle-info"></i>
                     About
                 </a>
             </li>
 
-            <li><a href="{{ url_for('logout') }}">
-                    <i class="fa-solid fa-sign-out-alt"></i>
+            <li>
+                <a href="{{ url_for('logout') }}">
+                    <i class="fa-solid fa-right-from-bracket"></i>
                     Logout
                 </a>
             </li>
-
         </ul>
-
     </aside>
 
-    <!-- Main Content -->
+    <!-- ================= MAIN CONTENT ================= -->
 
     <main class="main-content">
+        <header>
+            <h1>
+                <i class="fa-solid fa-gas-pump"></i>
+                Fuel Price Prediction System
+            </h1>
 
-    <header>
-        <h1>Fuel Price Prediction</h1>
-        <h4>
+            <h4>
+                Welcome,
+                <strong>{{ username }}</strong>
+            </h4>
+        </header>
 
-            Welcome,
-
-            <strong>{{ username }}</strong>
-
-        </h4>
-    </header>
-
-        <!-- Flash Message -->
-
+        <!-- ================= FLASH MESSAGE ================= -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-
-                    <div class="alert {{ category }}">
-                        {{ message }}
-                    </div>
-
-                {% endfor %}
-            {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert {{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
 
+        <!-- ================= DESCRIPTION ================= -->
 
-        <!--small instruction -->
         <p class="form-description">
-            Enter the required fuel parameters below to predict Petrol and Diesel prices using the trained Deep Learning model.
+            Enter the required fuel details below to predict future
+            Petrol and Diesel prices using the trained Deep Learning model.
         </p>
 
-
-        <!-- Prediction Form -->
-
+        <!-- ================= FORM ================= -->
         <div class="card">
-
-            <h2>Enter Fuel Parameters</h2>
+            <h2>
+                Enter Fuel Details
+            </h2>
 
             <form action="{{ url_for('prediction') }}"
                   method="POST"
                   autocomplete="off">
-
                 <div class="form-grid">
-
                     <div class="input-group">
-
-                        <label>Year</label>
+                        <label>
+                            <i class="fa-solid fa-calendar"></i>
+                            Year
+                        </label>
 
                         <input
-                            type="number"
-                            name="year"
-                            placeholder="2026"
-                            min="2020"
-                            max="2035"
-                            required>
+                               type="number"
+                               name="year"
+                               placeholder="2026"
+                               min="2020"
+                               max="2035"
+                               required>
                     </div>
 
                     <div class="input-group">
-
-                        <label>Month</label>
+                        <label>
+                            Month
+                        </label>
 
                         <input
-                            type="number"
-                            name="month"
-                            placeholder="1 - 12"
-                            min="1"
-                            max="12"
-                            required>
+                               type="number"
+                               name="month"
+                               placeholder="1 - 12"
+                               min="1"
+                               max="12"
+                               required>
                     </div>
 
                     <div class="input-group">
-
-                        <label>Week Number</label>
+                        <label>
+                            Day
+                        </label>
 
                         <input
-                            type="number"
-                            name="week"
-                            placeholder="1 - 53"
-                            min="1"
-                            max="53"
-                            required>
-
+                               type="number"
+                               name="day"
+                               placeholder="1 - 31"
+                               min="1"
+                               max="31"
+                               required>
                     </div>
 
                     <div class="input-group">
-
-                        <label>Brent Crude Price (USD)</label>
+                        <label>
+                            Brent Crude Price (USD)
+                        </label>
 
                         <input
-                            type="number"
-                            name="brent"
-                            placeholder="Example: 82.45"
-                            step="0.01"
-                            required>
-
+                               type="number"
+                               name="brent"
+                               step="0.01"
+                               placeholder="Example : 82.45"
+                               required>
                     </div>
 
                     <div class="input-group">
-
-                        <label>Tax Percentage</label>
+                        <label>
+                            Tax Percentage
+                        </label>
 
                         <input
-                            type="number"
-                            name="tax"
-                            placeholder="Example: 18.00"
-                            step="0.01"
-                            required>
-
+                               type="number"
+                               name="tax"
+                               step="0.01"
+                               placeholder="Example : 18.00"
+                               required>
                     </div>
 
+                    <div class="input-group">
+                        <label>
+                            Previous Petrol Price
+                        </label>
+
+                        <input
+                               type="number"
+                               name="petrol_prev"
+                               step="0.01"
+                               placeholder="Example : 102.50"
+                               required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            Previous Diesel Price
+                        </label>
+
+                        <input
+                               type="number"
+                               name="diesel_prev"
+                               step="0.01"
+                               placeholder="Example : 91.80"
+                               required>
+                    </div>
                 </div>
 
-                <button
-                    type="reset"
-                    class="btn-secondary">
+                <div class="button-group">
+                    <button
+                            type="submit"
+                            class="btn-primary">
+                        <i class="fa-solid fa-chart-line"></i>
+                        Predict Fuel Prices
+                    </button>
 
-                    Reset
-
-                </button>
-
+                    <button
+                            type="reset"
+                            class="btn-secondary">
+                        Reset
+                    </button>
+                </div>
             </form>
-
         </div>
 
-        <!-- Prediction Result -->
+        <!-- ================= RESULT ================= -->
 
         {% if petrol_price is not none %}
-
         <div class="result-container">
-
             <div class="result-card">
-
                 <h3>
-
                     <i class="fa-solid fa-gas-pump"></i>
-
                     Predicted Petrol Price
-
                 </h3>
 
-                <h2>{{ petrol_price }} USD/Litre</h2>
-
+                <h2>
+                    {{ petrol_price }} USD/Litre
+                </h2>
             </div>
 
             <div class="result-card">
-
                 <h3>
-
-                    <i class="fa-solid fa-truck"></i>
-
+                    <i class="fa-solid fa-oil-can"></i>
                     Predicted Diesel Price
-
                 </h3>
 
-                <h2>{{ diesel_price }} USD/Litre</h2>
-
+                <h2>
+                    {{ diesel_price }} USD/Litre
+                </h2>
             </div>
-
         </div>
-
         {% endif %}
-
     </main>
-
 </div>
+
 <!-- ================= FOOTER ================= -->
+
 <footer class="footer">
-
     <p>
-
         © 2026 PriceSense
-
     </p>
 
     <p>
-
         Developed using Python, Flask, TensorFlow, NumPy and Pandas
-
     </p>
 
+    <p>
+        Final Year Diploma Internship Project
+    </p>
 </footer>
 
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>

@@ -101,29 +101,146 @@
         </header>
         <!-- ================= DESCRIPTION ================= -->
 
-        <p class="form-description">
-            View the previously predicted Petrol and Diesel prices.
-            Each successful prediction is stored and displayed below
-            for future reference.
-        </p>
+        <!-- ================= HISTORY BANNER ================= -->
 
+            <div class="history-banner">
+
+                <div class="row align-items-center">
+
+                    <div class="col-lg-8">
+
+                        <h2>
+
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+
+                            Prediction History
+
+                        </h2>
+
+                        <p>
+
+                            View all previously predicted Petrol and Diesel prices.
+                            Every successful prediction is automatically saved,
+                            allowing you to review past forecasts and compare results.
+
+                        </p>
+
+                    </div>
+
+                    <div class="col-lg-4 text-center">
+
+                        <i class="fa-solid fa-database history-icon"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+        <div class="history-search mb-4">
+            <input
+                type="text"
+                id="historySearch"
+                class="form-control"
+                placeholder="Search Prediction History...">
+        </div>
+        <!-- history statics-->
+         <div class="history-stats">
+
+            <div class="history-box">
+
+                <i class="fa-solid fa-database"></i>
+
+                <h3>{{ history_count }}</h3>
+
+                <p>Total Predictions</p>
+
+            </div>
+
+        </div>
+        
+        <!-- ================= SEARCH ================= -->
+
+<div class="history-search">
+
+    <div class="input-group">
+
+        <span class="input-group-text">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+        </span>
+
+        <input
+
+            type="text"
+
+            id="historySearch"
+
+            class="form-control"
+
+            placeholder="Search prediction history...">
+
+    </div>
+
+</div>
         <!-- ================= HISTORY TABLE ================= -->
 
-        <div class="card">
-            <h2>
-                Prediction Prediction Records
-            </h2>
+<div class="history-card">
 
-            <div class="table-responsive">
-                {% if tables %}
-                    {{ tables | safe }}
-                {% else %}
-                    <p class="text-center">
-                        No prediction history available.
-                    </p>
-                {% endif %}
-            </div>
+    <div class="history-header">
+
+        <h2>
+
+            <i class="fa-solid fa-table"></i>
+
+            Prediction Records
+
+        </h2>
+
+    </div>
+
+    <div class="table-responsive">
+
+        {% if tables %}
+
+            {{ tables | safe }}
+
+        {% else %}
+
+        <div class="empty-history">
+
+            <i class="fa-solid fa-clock-rotate-left"></i>
+
+            <h3>
+
+                No Prediction History Found
+
+            </h3>
+
+            <p>
+
+                Start predicting fuel prices and your
+                prediction history will appear here.
+
+            </p>
+
+            <a
+
+            href="{{ url_for('prediction') }}"
+
+            class="btn btn-primary">
+
+                Predict Fuel Prices
+
+            </a>
+
         </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
     </main>
 </div>
 

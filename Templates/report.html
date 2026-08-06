@@ -100,10 +100,102 @@
         </header>
 
         <!-- ================= DESCRIPTION ================= -->
-        <p class="form-description">
-            This report displays the performance of the trained
-            Deep Learning model used for fuel price prediction.
-        </p>
+        <!-- ================= REPORT BANNER ================= -->
+
+        <div class="report-banner">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+
+                    <h2>
+
+                        <i class="fa-solid fa-microchip"></i>
+
+                        AI Model Performance
+
+                    </h2>
+
+                    <p>
+
+                        This page summarizes the performance of the
+                        Deep Learning model trained using historical
+                        fuel prices, Brent crude oil prices, tax percentage
+                        and seasonal trends.
+
+                    </p>
+
+                </div>
+
+                <div class="col-lg-4 text-center">
+
+                    <i class="fa-solid fa-chart-line report-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+            <div class="row g-4 mt-4">
+
+        <div class="col-md-3">
+
+        <div class="dashboard-card">
+
+        <i class="fa-solid fa-gas-pump card-icon"></i>
+
+        <h6>Petrol R²</h6>
+
+        <h3>{{ petrol_r2 }}</h3>
+
+        </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+        <div class="dashboard-card">
+
+        <i class="fa-solid fa-oil-can card-icon"></i>
+
+        <h6>Diesel R²</h6>
+
+        <h3>{{ diesel_r2 }}</h3>
+
+        </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+        <div class="dashboard-card">
+
+        <i class="fa-solid fa-chart-area card-icon"></i>
+
+        <h6>Petrol MAE</h6>
+
+        <h3>{{ petrol_mae }}</h3>
+
+        </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+        <div class="dashboard-card">
+
+        <i class="fa-solid fa-wave-square card-icon"></i>
+
+        <h6>Diesel MAE</h6>
+
+        <h3>{{ diesel_mae }}</h3>
+
+        </div>
+
+        </div>
+
+        </div>
 
         <!-- ================= MODEL DETAILS ================= -->
 
@@ -188,8 +280,12 @@
             </h2>
 
             <img src="{{ url_for('static', filename='loss_curve.png') }}"
-                class="report-image"
-                alt="Training Loss Curve">
+
+            class="report-image"
+
+            onclick="openGraph(this)"
+
+            alt="Training Loss Curve">
         </div>
     </main>
 </div>

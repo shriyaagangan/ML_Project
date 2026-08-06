@@ -178,4 +178,28 @@ document.addEventListener("DOMContentLoaded", function () {
     },100);
     
 });
+document.addEventListener("DOMContentLoaded", function () {
 
+    const search = document.getElementById("historySearch");
+
+    if(search){
+
+        search.addEventListener("keyup", function(){
+
+            let filter = search.value.toLowerCase();
+
+            let rows = document.querySelectorAll("table tbody tr");
+
+            rows.forEach(function(row){
+
+                row.style.display = row.innerText.toLowerCase().includes(filter)
+                    ? ""
+                    : "none";
+
+            });
+
+        });
+
+    }
+
+});

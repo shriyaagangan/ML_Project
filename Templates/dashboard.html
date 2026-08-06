@@ -25,11 +25,8 @@
 <!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold"
-           href="{{ url_for('dashboard') }}">
-            <img src="{{ url_for('static', filename='images/logo.png') }}"
-                 class="nav-logo">
-            PriceSense
+        <a class="navbar-brand fw-bold" href="{{ url_for('dashboard') }}">
+            <img src="https://icons8.com" class="nav-logo" alt="PriceSense Logo"> PriceSense
         </a>
 
         <div class="ms-auto d-flex align-items-center">
@@ -128,9 +125,7 @@ data-bs-dismiss="alert">
             </div>
 
             <div class="col-lg-5 text-center">
-                <img src="{{ url_for('static', filename='images/fuel_dashboard.png') }}"
-                class="dashboard-logo"
-                alt="Dashboard Illustration">
+                <img src="https://unsplash.com" class="dashboard-logo" style="border-radius: 20px; box-shadow: 0 0 20px rgba(76,201,240,0.3);" alt="AI Data Network Illustration">
             </div>
         </div>
     </div>
@@ -173,7 +168,7 @@ data-bs-dismiss="alert">
             </div>
         </div>
         <div class="col-md-3">
-            <div class="dashboard-card">
+            <div class="dashboard-card h-100">
                 <i class="fa-solid fa-oil-can card-icon"></i>
                 <h6>
                     Diesel R²
@@ -560,9 +555,8 @@ Latest Prediction
 <!-- ================= FOOTER ================= -->
 <footer class="footer mt-5">
     <div class="container text-center">
-        <img src="{{ url_for('static', filename='images/logo.png') }}"
-        class="footer-logo"
-        alt="PriceSense Logo">
+        <img src="https://icons8.com" class="footer-logo" alt="PriceSense Logo">
+
         <h4>
             PriceSense
 
